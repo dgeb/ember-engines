@@ -1,4 +1,6 @@
 /* global define, self */
+/*eslint no-redeclare: 0*/
+
 import Route from '@ember/routing/route';
 
 import RSVP from 'rsvp';

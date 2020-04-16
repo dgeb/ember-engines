@@ -435,6 +435,25 @@ module('Acceptance | routeless engine demo', function (hooks) {
     );
   });
 
+  test("transitionToExternalRoute transitions to the parent application from within an engine's controller and returns a thenable Transition object", async function (
+    assert
+  ) {
+    assert.expect(2);
+
+    await visit('/routable-engine-demo/ember-blog/post/1');
+    await click('.routable-post-transition-to-route-home-button');
+
+    assert.equal(currentURL(), '/');
+
+    await click('.routeable-engine');
+    await click('.ember-blog-new');
+    await click('.trigger-transition-to');
+
+    assert.ok(
+      find('.routable-post-transition-to-route-home-button').classList.contains('transitioned-to-external-route')
+    );
+  });
+
   test('replaceWithExternal transitions to the parent application from within an engine and returns a thenable Transition object', async function (
     assert
   ) {

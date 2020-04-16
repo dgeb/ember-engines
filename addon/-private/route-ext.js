@@ -14,5 +14,5 @@ function externalAlias(methodName) {
 
 Route.reopen({
   transitionToExternal: externalAlias('transitionTo'),
-  replaceWithExternal: externalAlias('replaceWith'),
+  replaceWithExternal: externalAlias('replaceWith')
 });

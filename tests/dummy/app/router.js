@@ -1,9 +1,10 @@
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
-const Router = EmberRouter.extend({
-  location: config.locationType,
-});
+export default class Router extends EmberRouter {
+  location = config.locationType;
+  rootURL = config.rootURL;
+}
 
 Router.map(function() {
   this.route('routeless-engine-demo');
@@ -32,5 +33,3 @@ Router.map(function() {
   // Used to check for collisions with Post route in ember-blog
   this.route('post', { path: '/post/:id' });
 });
-
-export default Router;

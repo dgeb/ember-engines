@@ -5,7 +5,6 @@ node_js:
   # so that your addon works for all apps
   - "10"
 
-sudo: false
 dist: trusty
 
 addons:
@@ -29,23 +28,31 @@ jobs:
       # See https://git.io/vdao3 for details.
       - JOBS=1
   include:
+    # runs linting and tests with current locked deps
     - stage: "Tests"
       name: "yarn lint:js"
       script: yarn lint:js
-    - name: "yarn test"
-      script: yarn test
+    - name: "yarn test:ember"
+      script: yarn test:ember
     - name: "yarn test:node"
       script: yarn test:node
 
+    - stage: "Additional Tests"
+      name: "Floating Dependencies"
+      install:
+        - yarn install --no-lockfile --non-interactive
+      script:
+        - yarn test:ember
+
     # we recommend new addons test the current and previous LTS
     # as well as latest stable release (bonus points to beta/canary)
-    - stage: "Additional Tests"
-      env: EMBER_TRY_SCENARIO=ember-lts-2.18
-    - env: EMBER_TRY_SCENARIO=ember-lts-3.4
-    - env: EMBER_TRY_SCENARIO=ember-lts-3.8
+    - env: EMBER_TRY_SCENARIO=ember-lts-3.12
+    - env: EMBER_TRY_SCENARIO=ember-lts-3.16
     - env: EMBER_TRY_SCENARIO=ember-release
     - env: EMBER_TRY_SCENARIO=ember-beta
     - env: EMBER_TRY_SCENARIO=ember-canary
+    - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
+    - env: EMBER_TRY_SCENARIO=ember-classic
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
