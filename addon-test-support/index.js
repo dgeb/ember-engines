@@ -16,10 +16,13 @@ import { getContext } from '@ember/test-helpers/setup-context';
  */
 
 export function setupEngineTest(hooks, engineName, mountPoint) {
-  hooks.beforeEach(function () {
-    let engineLoadPromise = this.owner.hasRegistration(`engine:${engineName}`)
-      ? RSVP.Promise.resolve(this.owner.buildChildEngineInstance(engineName))
-      : loadEngine(mountPoint);
+  hooks.beforeEach(function() {
+    let engineLoadPromise;
+    if (this.owner.hasRegistration(`engine:${engineName}`)) {
+      engineLoadPromise = RSVP.Promise.resolve(this.owner.buildChildEngineInstance(engineName));
+    } else {
+      engineLoadPromise = loadEngine(mountPoint);
+    }
     return engineLoadPromise.then((engineInstance) => {
       return engineInstance.boot().then(() => {
         this.engine = engineInstance;
