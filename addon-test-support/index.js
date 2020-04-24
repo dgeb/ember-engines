@@ -19,8 +19,14 @@ export function setupEngineTest(hooks, engineName, mountPoint) {
   hooks.beforeEach(function() {
     let engineLoadPromise;
     if (this.owner.hasRegistration(`engine:${engineName}`)) {
-      engineLoadPromise = RSVP.Promise.resolve(this.owner.buildChildEngineInstance(engineName));
+      // eager engines
+      let engineInstance = this.owner.buildChildEngineInstance(engineName, {
+        routable: true,
+        mountPoint,
+      });
+      engineLoadPromise = RSVP.Promise.resolve(engineInstance);
     } else {
+      // lazy engines
       engineLoadPromise = loadEngine(mountPoint);
     }
     return engineLoadPromise.then((engineInstance) => {
