@@ -35,5 +35,5 @@ See the [Contributing](CONTRIBUTING.md) guide for details.
 
 ## License
 
-Copyright 2015-2020 Dan Gebhardt and Robert Jackson. MIT License (see
+Copyright 2015-2021 Dan Gebhardt and Robert Jackson. MIT License (see
 [LICENSE.md](LICENSE.md) for details).
